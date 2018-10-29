@@ -12,59 +12,47 @@ Resources:
  VPCGatewayAttachment:
    Type: AWS::EC2::VPCGatewayAttachment
    Properties:
-        VpcId:
-          Ref: VPC
-        InternetGatewayId:
-          Ref: IGW
+        VpcId: !Ref VPC
+        InternetGatewayId: !Ref IGW
  Subnet1:
    Type: AWS::EC2::Subnet
    Properties:
-      VpcId:
-        Ref: VPC
+      VpcId: !Ref VPC
       CidrBlock: 10.0.1.0/24
       MapPublicIpOnLaunch: true
  Subnet2:
    Type: AWS::EC2::Subnet
    Properties:
-      VpcId:
-        Ref: VPC
+      VpcId: !Ref VPC
       CidrBlock: 10.0.2.0/24
       MapPublicIpOnLaunch: true
  RouteTable:
    Type: AWS::EC2::RouteTable
    Properties:
-       VpcId:
-        Ref: VPC
+       VpcId: !Ref VPC
  InternetRoute:
    Type: AWS::EC2::Route
    DependsOn: IGW
    Properties:
       DestinationCidrBlock: 0.0.0.0/0
-      GatewayId:
-        Ref: IGW
-      RouteTableId:
-        Ref: RouteTable
+      GatewayId: !Ref IGW
+      RouteTableId: !Ref RouteTable
  Subnet1RouteTableAssociation:
    Type: AWS::EC2::SubnetRouteTableAssociation
    Properties:
-     RouteTableId:
-      Ref: RouteTable
-     SubnetId:
-      Ref: Subnet1
+     RouteTableId: !Ref RouteTable
+     SubnetId: !Ref Subnet1
  Subnet2RouteTableAssociation:
    Type: AWS::EC2::SubnetRouteTableAssociation
    Properties:
-     RouteTableId:
-      Ref: RouteTable
-     SubnetId:
-      Ref: Subnet2
+     RouteTableId: !Ref RouteTable
+     SubnetId: !Ref Subnet2
  SecurityGroup:
    Type: AWS::EC2::SecurityGroup
    Properties:
      GroupName: "Internet Group"
      GroupDescription: "SSH traffic in, all traffic out"
-     VpcId:
-      Ref: VPC
+     VpcId: !Ref VPC
      SecurityGrupIngress:
         IpProtocol: tcp
         FromPort: '22'
