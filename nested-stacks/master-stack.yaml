@@ -1,4 +1,4 @@
-WSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: '2010-09-09'
 Description: EC2 instance with functions
 Parameters:
   KeyName:
@@ -10,21 +10,25 @@ Parameters:
   Subnet:
     Description: subnet to launch virtual server in
     Type: AWS::EC2::Subnet::Id
-  Resources:
-    EC2Stack:
-    Type: AWS::CloudFormation::Stack
-    Properties:
+  URL:
+    Description: URL for load testing
+    Type: String
+    Default: https://linuxacademy.com
+Resources:
+  EC2Stack:
+     Type: AWS::CloudFormation::Stack
+     Properties:
       Parameters:
         KeyName: !Ref KeyName
         VPC: !Ref VPC
         Subnet: !Ref Subnet
         URL: !Ref URL
-      TemplateURL: https://s3-eu-west-1.amazonaws.com/learn-cloudformation/lab7-nested-stacks/ec2-stack.json
+      TemplateURL: https://s3.us-east-2.amazonaws.com/tej-test-argus/ec2-stack.yaml
       TimeoutInMinutes: '5'
   S3Stack:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: https://s3-eu-west-1.amazonaws.com/learn-cloudformation/lab7-nested-stacks/s3-stack.json
+     Type: AWS::CloudFormation::Stack
+     Properties:
+      TemplateURL: https://s3.us-east-2.amazonaws.com/tej-test-argus/s3-stack.yaml
       TimeoutInMinutes: '2'
       Parameters:
         InstanceId: !Sub ${EC2Stack.Outputs.InstanceId}

@@ -10,6 +10,10 @@ Parameters:
   Subnet:
     Description: subnet to launch virtual server in
     Type: AWS::EC2::Subnet::Id
+  URL:
+    Description: URL for load test
+    Type: String
+    Default: https://linuxacademy.com
 Mappings:
   RegionAMIMap:
     ap-northeast-1:
@@ -26,6 +30,8 @@ Mappings:
       AmazonLinux: ami-b52890a8
     us-east-1:
       AmazonLinux: ami-1ecae776
+    us-east-2:
+      AmazonLinux: ami-0f9c61b5a562a16af
     us-west-1:
       AmazonLinux: ami-d114f295
     us-west-2:
@@ -77,5 +83,5 @@ Outputs:
     Value:
       Fn::GetAtt:
       - EC2Instance
-      - PublicIp
+      - PrivateIp
     Description: public IP address of virtual server
